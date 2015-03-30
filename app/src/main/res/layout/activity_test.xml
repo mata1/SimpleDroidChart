@@ -9,6 +9,8 @@
 
     <com.github.mata1.simpledroidchart.BarChartView
         custom:showHorizontalGrid="true"
+        custom:showValues="true"
+
         android:layout_weight="1"
         android:id="@+id/bar"
         android:padding="20dp"
@@ -22,7 +24,10 @@
         custom:showVerticalGrid="true"
         custom:showLines="true"
         custom:showPoints="true"
-        custom:gridColor="#ffaa00"
+        custom:gridColor="#33ffaa00"
+        custom:gridStrokeWidth="2"
+        custom:showValues="true"
+
         android:layout_weight="1"
         android:id="@+id/line"
         android:padding="20dp"
@@ -34,6 +39,8 @@
 
     <com.github.mata1.simpledroidchart.PieChartView
         custom:strokeWidth="40"
+        custom:showValues="true"
+
         android:layout_weight="1"
         android:id="@+id/pie"
         android:padding="10dp"

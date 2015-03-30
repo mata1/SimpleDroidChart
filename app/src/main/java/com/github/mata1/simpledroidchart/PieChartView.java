@@ -63,6 +63,17 @@ public class PieChartView extends ChartView {
             mChartPaint.setColor(PASTEL_PALETTE[(j % PASTEL_PALETTE.length)]);
             canvas.drawArc(arcRect, angle, part, false, mChartPaint);
 
+            // draw values
+            if (mShowValues) {
+                String value = String.format(mDataSet.getMax() > 10 ? "%.0f" : "%.2f", entry.getyValue());
+                double cos = Math.cos(Math.toRadians(angle + part/2)) * r;
+                double sin = Math.sin(Math.toRadians(angle + part/2)) * r;
+                canvas.drawText(value,
+                        arcRect.centerX() + (float)cos,
+                        arcRect.centerY() + (float)sin,
+                        mValuePaint);
+            }
+
             angle += part + GAP_WIDTH;
             j += 5;
         }

@@ -15,11 +15,13 @@ import com.github.mata1.simpledroidchart.data.DataSet;
  */
 public abstract class ChartView extends View {
 
-    protected Paint mChartPaint, mGridPaint;
+    protected Paint mChartPaint, mGridPaint, mValuePaint;
 
     protected DataSet mDataSet;
 
     protected boolean mShowHorGrid;
+
+    protected boolean mShowValues;
 
     // pastel colors palette
     public static final int[] PASTEL_PALETTE = new int[] {
@@ -61,6 +63,11 @@ public abstract class ChartView extends View {
 
         mGridPaint = new Paint();
 
+        mValuePaint = new Paint();
+        mValuePaint.setAntiAlias(true);
+        mValuePaint.setTextAlign(Paint.Align.CENTER);
+        mValuePaint.setFakeBoldText(true);
+
         // init data
         mDataSet = new DataSet();
     }
@@ -72,10 +79,12 @@ public abstract class ChartView extends View {
     private void initAttributes(AttributeSet attrs) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ChartView);
         try {
-            mChartPaint.setStrokeWidth(a.getFloat(R.styleable.ChartView_strokeWidth, 2));
             mShowHorGrid = a.getBoolean(R.styleable.ChartView_showHorizontalGrid, false);
-            mGridPaint.setColor(a.getColor(R.styleable.ChartView_gridColor, Color.LTGRAY));
+            mChartPaint.setStrokeWidth(a.getFloat(R.styleable.ChartView_strokeWidth, 2));
             mChartPaint.setColor(a.getColor(R.styleable.ChartView_chartColor, Color.BLACK));
+            mGridPaint.setStrokeWidth(a.getFloat(R.styleable.ChartView_gridStrokeWidth, 1));
+            mGridPaint.setColor(a.getColor(R.styleable.ChartView_gridColor, Color.LTGRAY));
+            mShowValues = a.getBoolean(R.styleable.ChartView_showValues, false);
         } finally {
             a.recycle();
         }
@@ -121,10 +130,19 @@ public abstract class ChartView extends View {
 
     /**
      * Show horizontal grid lines
-     * @param showHorGrid show horizontal grid
+     * @param showHorGrid whether to show horizontal grid
      */
     public void setShowHorizontalGrid(boolean showHorGrid) {
         mShowHorGrid = showHorGrid;
+        invalidate();
+    }
+
+    /**
+     * Show data values
+     * @param showValues whether to show data values
+     */
+    public void setShowValues(boolean showValues) {
+        mShowValues = showValues;
         invalidate();
     }
 

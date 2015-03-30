@@ -2,9 +2,11 @@
 <resources>
     <declare-styleable name="ChartView">
         <attr name="strokeWidth" format="float"/>
+        <attr name="gridStrokeWidth" format="float"/>
         <attr name="showHorizontalGrid" format="boolean"/>
         <attr name="gridColor" format="color"/>
         <attr name="chartColor" format="color"/>
+        <attr name="showValues" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="LineChartView">

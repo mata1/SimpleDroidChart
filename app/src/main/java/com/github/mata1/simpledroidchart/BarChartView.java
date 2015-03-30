@@ -2,6 +2,8 @@ package com.github.mata1.simpledroidchart;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
@@ -45,17 +47,24 @@ public class BarChartView extends ChartView {
 
         int i = 0; // index for bar
         int j = 0; // index for palette
-        int width = (getWidth() - getPaddingLeft() - getPaddingRight()) / mDataSet.size();
+        int width = (getWidth() - getPaddingLeft() - getPaddingRight()) / mDataSet.size(); // bar width
 
         for (DataEntry entry : mDataSet) {
             mChartPaint.setColor(PASTEL_PALETTE[(j % PASTEL_PALETTE.length)]);
 
-            barRect.set(i * width + getPaddingLeft() + GAP_WIDTH/2,
+            float x = i * width + getPaddingLeft();
+            barRect.set(x + GAP_WIDTH/2,
                     calcY(entry.getyValue()),
-                    i * width + width + getPaddingLeft() - GAP_WIDTH/2,
+                    x + width - GAP_WIDTH/2,
                     getHeight());
 
             canvas.drawRect(barRect, mChartPaint);
+
+            // draw values
+            if (mShowValues) {
+                String value = String.format(mDataSet.getMax() > 10 ? "%.0f" : "%.2f", entry.getyValue());
+                canvas.drawText(value, x + width/2, calcY(entry.getyValue()) + mValuePaint.getTextSize()*1.5f, mValuePaint);
+            }
 
             i++;
             j += 5;

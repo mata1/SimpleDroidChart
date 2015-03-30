@@ -92,6 +92,18 @@ public class LineChartView extends ChartView {
                 }
             }
 
+            // draw values
+            if (mShowValues) {
+                String value = String.format(mDataSet.getMax() > 10 ? "%.0f" : "%.2f", a.getyValue());
+                canvas.drawText(value, ax, ay - mValuePaint.getTextSize(), mValuePaint);
+
+                // last point
+                if (i == mDataSet.size() - 2) {
+                    value = String.format(mDataSet.getMax() > 10 ? "%.0f" : "%.2f", b.getyValue());
+                    canvas.drawText(value, bx, by - mValuePaint.getTextSize(), mValuePaint);
+                }
+            }
+
         }
     }
 
