@@ -1,6 +1,7 @@
 package com.github.mata1.simpledroidchart;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
@@ -14,11 +15,31 @@ public class LineChartView extends ChartView {
 
     private boolean mShowVerGrid;
 
-    private boolean mShowLines = true;
-    private boolean mShowPoints = true;
+    private boolean mShowLines;
+    private boolean mShowPoints;
 
     public LineChartView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initAttributes(attrs);
+    }
+
+    public LineChartView(Context context, AttributeSet attrs, int defStyle) {
+        this(context, attrs);
+    }
+
+    /**
+     * Initialize XML attributes
+     * @param attrs xml attribute set
+     */
+    private void initAttributes(AttributeSet attrs) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LineChartView);
+        try {
+            mShowLines = a.getBoolean(R.styleable.LineChartView_showLines, true);
+            mShowPoints = a.getBoolean(R.styleable.LineChartView_showPoints, true);
+            mShowVerGrid = a.getBoolean(R.styleable.LineChartView_showVerticalGrid, false);
+        } finally {
+            a.recycle();
+        }
     }
 
     protected void onDraw(Canvas canvas) {

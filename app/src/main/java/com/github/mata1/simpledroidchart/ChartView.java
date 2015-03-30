@@ -1,6 +1,7 @@
 package com.github.mata1.simpledroidchart;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -43,6 +44,11 @@ public abstract class ChartView extends View {
     public ChartView(Context context, AttributeSet attrs)  {
         super(context, attrs);
         init();
+        initAttributes(attrs);
+    }
+
+    public ChartView(Context context, AttributeSet attrs, int defStyle) {
+        this(context, attrs);
     }
 
     /**
@@ -51,15 +57,28 @@ public abstract class ChartView extends View {
     private void init() {
         // init paints
         mChartPaint = new Paint();
-        //mChartPaint.setStyle(Paint.Style.STROKE);
-        mChartPaint.setStrokeWidth(2);
         mChartPaint.setAntiAlias(true);
 
         mGridPaint = new Paint();
-        mGridPaint.setColor(Color.LTGRAY);
 
         // init data
         mDataSet = new DataSet();
+    }
+
+    /**
+     * Initialize XML attributes
+     * @param attrs xml attribute set
+     */
+    private void initAttributes(AttributeSet attrs) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ChartView);
+        try {
+            mChartPaint.setStrokeWidth(a.getFloat(R.styleable.ChartView_strokeWidth, 2));
+            mShowHorGrid = a.getBoolean(R.styleable.ChartView_showHorizontalGrid, false);
+            mGridPaint.setColor(a.getColor(R.styleable.ChartView_gridColor, Color.LTGRAY));
+            mChartPaint.setColor(a.getColor(R.styleable.ChartView_chartColor, Color.BLACK));
+        } finally {
+            a.recycle();
+        }
     }
 
     /**

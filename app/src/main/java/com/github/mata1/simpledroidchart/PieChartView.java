@@ -1,6 +1,7 @@
 package com.github.mata1.simpledroidchart;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -19,10 +20,33 @@ public class PieChartView extends ChartView {
 
     public PieChartView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
+        initAttributes(attrs);
+    }
 
+    public PieChartView(Context context, AttributeSet attrs, int defStyle) {
+        this(context, attrs);
+    }
+
+    /**
+     * Initialize objects
+     */
+    private void init() {
         arcRect = new RectF();
         mChartPaint.setStyle(Paint.Style.STROKE);
-        setStrokeWidth(60); // TODO set relative or constant
+    }
+
+    /**
+     * Initialize XML attributes
+     * @param attrs xml attribute set
+     */
+    private void initAttributes(AttributeSet attrs) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ChartView);
+        try {
+            setStrokeWidth(a.getFloat(R.styleable.ChartView_strokeWidth, 60));
+        } finally {
+            a.recycle();
+        }
     }
 
     protected void onDraw(Canvas canvas) {

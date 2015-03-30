@@ -18,7 +18,17 @@ public class BarChartView extends ChartView {
 
     public BarChartView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
+    }
 
+    public BarChartView(Context context, AttributeSet attrs, int defStyle) {
+        this(context, attrs);
+    }
+
+    /**
+     * Initialize objects
+     */
+    private void init() {
         barRect = new RectF();
     }
 
