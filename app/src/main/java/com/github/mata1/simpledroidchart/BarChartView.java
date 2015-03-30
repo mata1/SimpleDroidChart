@@ -37,6 +37,12 @@ public class BarChartView extends ChartView {
         if (mDataSet.size() == 0)
             return;
 
+        // draw horizontal grid
+        if (mShowHorGrid) {
+            for (Float point : mDataSet.getMajorPoints())
+                canvas.drawLine(0, calcY(point), getWidth(), calcY(point), mGridPaint);
+        }
+
         int i = 0; // index for bar
         int j = 0; // index for palette
         int width = (getWidth() - getPaddingLeft() - getPaddingRight()) / mDataSet.size();
@@ -44,9 +50,8 @@ public class BarChartView extends ChartView {
         for (DataEntry entry : mDataSet) {
             mChartPaint.setColor(PASTEL_PALETTE[(j % PASTEL_PALETTE.length)]);
 
-            float relY = entry.getyValue() / mDataSet.getMax();
             barRect.set(i * width + getPaddingLeft() + GAP_WIDTH/2,
-                    getHeight() - relY * getHeight() + getPaddingTop(),
+                    calcY(entry.getyValue()),
                     i * width + width + getPaddingLeft() - GAP_WIDTH/2,
                     getHeight());
 
@@ -55,5 +60,15 @@ public class BarChartView extends ChartView {
             i++;
             j += 5;
         }
+    }
+
+    /**
+     * Calculate data Y position for given value
+     * @param value data value
+     * @return calculated Y position
+     */
+    private float calcY(float value) {
+        float relY = value / mDataSet.getMax();
+        return getHeight() - relY * (getHeight() - getPaddingTop());
     }
 }

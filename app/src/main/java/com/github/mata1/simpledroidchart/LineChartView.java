@@ -8,6 +8,9 @@ import android.util.AttributeSet;
 
 import com.github.mata1.simpledroidchart.data.DataEntry;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * View class for line charts
  */
@@ -45,10 +48,8 @@ public class LineChartView extends ChartView {
     protected void onDraw(Canvas canvas) {
         // draw horizontal grid
         if (mShowHorGrid) {
-            float nLines = getHeight() / 50;
-            float dist = getHeight() / nLines;
-            for (int i = 0; i <= nLines; i++)
-                canvas.drawLine(0, i * dist, getWidth(), i * dist, mGridPaint);
+            for (Float point : mDataSet.getMajorPoints())
+                canvas.drawLine(0, calcY(point), getWidth(), calcY(point), mGridPaint);
         }
         // draw vertical grid
         if (mShowVerGrid) {
@@ -82,7 +83,7 @@ public class LineChartView extends ChartView {
                 mChartPaint.setColor(PASTEL_PALETTE[j % PASTEL_PALETTE.length]);
                 j += 5;
                 canvas.drawCircle(ax, ay, r, mChartPaint);
-                //canvas.drawText(a.getyValue()+"", fx + 10, ay, mChartPaint); // DEBUG
+                //canvas.drawText(a.getyValue()+"", ax + 10, ay, mChartPaint); // DEBUG
 
                 // last point
                 if (i == mDataSet.size() - 2) {

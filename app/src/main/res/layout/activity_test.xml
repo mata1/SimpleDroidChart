@@ -8,6 +8,7 @@
     android:padding="10dp">
 
     <com.github.mata1.simpledroidchart.BarChartView
+        custom:showHorizontalGrid="true"
         android:layout_weight="1"
         android:id="@+id/bar"
         android:padding="20dp"
