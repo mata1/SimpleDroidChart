@@ -32,16 +32,22 @@ public class TestActivity extends Activity {
         data.add(new DataEntry("Maribor", 0.2f));
         data.add(new DataEntry("Celje", 0.09f));
         data.add(new DataEntry("Koper", 0.26f));
-        data.add(new DataEntry("Dravograd", 1.0f));*/
+        data.add(new DataEntry("Dravograd", 0.5f));
+        data.add(new DataEntry("Dravograd", 0.1f));
+        data.add(new DataEntry("Dravograd", 0.2f));
+        data.add(new DataEntry("Dravograd", 0.3f));
+        data.add(new DataEntry("Dravograd", 0.2f));*/
 
         LineChartView line = (LineChartView)findViewById(R.id.line);
+        line.setColorPalette(ColorPalette.getPalette(PaletteType.CAKE));
         line.setData(data);
 
         PieChartView pie = (PieChartView)findViewById(R.id.pie);
+        pie.setColorPalette(ColorPalette.getRandomPalette(0.5f, 0.95f));
         pie.setData(data);
 
         BarChartView bar = (BarChartView)findViewById(R.id.bar);
-        bar.setColorPalette(ColorPalette.getPalette(PaletteType.PRIMARY));
+        bar.setColorPalette(ColorPalette.getPalette(PaletteType.GRAYSCALE));
         bar.setData(data);
     }
 }
