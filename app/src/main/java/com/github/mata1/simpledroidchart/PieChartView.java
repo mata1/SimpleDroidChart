@@ -57,10 +57,10 @@ public class PieChartView extends ChartView {
                 getHeight() / 2 + r);
 
         float angle = 0;
-        int j = 0; // index for palette
+        mColorPalette.reset();
         for (DataEntry entry : mDataSet) {
             float part = entry.getyValue() / mDataSet.getSum() * (360 - mDataSet.size() * GAP_WIDTH);
-            mChartPaint.setColor(PASTEL_PALETTE[(j % PASTEL_PALETTE.length)]);
+            mChartPaint.setColor(mColorPalette.next());
             canvas.drawArc(arcRect, angle, part, false, mChartPaint);
 
             // draw values
@@ -75,7 +75,6 @@ public class PieChartView extends ChartView {
             }
 
             angle += part + GAP_WIDTH;
-            j += 5;
         }
 
     }
