@@ -49,8 +49,9 @@ public class BarChartView extends ChartView {
         int j = 0; // index for palette
         int width = (getWidth() - getPaddingLeft() - getPaddingRight()) / mDataSet.size(); // bar width
 
+        mColorPalette.reset();
         for (DataEntry entry : mDataSet) {
-            mChartPaint.setColor(PASTEL_PALETTE[(j % PASTEL_PALETTE.length)]);
+            mChartPaint.setColor(mColorPalette.next());
 
             float x = i * width + getPaddingLeft();
             barRect.set(x + GAP_WIDTH/2,
@@ -67,7 +68,6 @@ public class BarChartView extends ChartView {
             }
 
             i++;
-            j += 5;
         }
     }
 

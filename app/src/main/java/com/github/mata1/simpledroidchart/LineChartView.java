@@ -60,7 +60,7 @@ public class LineChartView extends ChartView {
         }
 
         // draw chart
-        int j = 0; // index for palette
+        mColorPalette.reset();
         for (int i = 0; i < mDataSet.size() - 1; i++) {
             DataEntry a = mDataSet.get(i);
             DataEntry b = mDataSet.get(i + 1);
@@ -80,14 +80,13 @@ public class LineChartView extends ChartView {
             if (mShowPoints) {
                 int r = 8; // point radius TODO set relative to view size or constant
 
-                mChartPaint.setColor(PASTEL_PALETTE[j % PASTEL_PALETTE.length]);
-                j += 5;
+                mChartPaint.setColor(mColorPalette.next());
                 canvas.drawCircle(ax, ay, r, mChartPaint);
                 //canvas.drawText(a.getyValue()+"", ax + 10, ay, mChartPaint); // DEBUG
 
                 // last point
                 if (i == mDataSet.size() - 2) {
-                    mChartPaint.setColor(PASTEL_PALETTE[j % PASTEL_PALETTE.length]);
+                    mChartPaint.setColor(mColorPalette.next());
                     canvas.drawCircle(bx, by, r, mChartPaint);
                 }
             }

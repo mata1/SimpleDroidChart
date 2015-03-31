@@ -9,6 +9,8 @@ import com.github.mata1.simpledroidchart.PieChartView;
 import com.github.mata1.simpledroidchart.R;
 import com.github.mata1.simpledroidchart.data.DataEntry;
 import com.github.mata1.simpledroidchart.data.DataSet;
+import com.github.mata1.simpledroidchart.palettes.ColorPalette;
+import com.github.mata1.simpledroidchart.palettes.PaletteType;
 
 public class TestActivity extends Activity {
 
@@ -39,6 +41,7 @@ public class TestActivity extends Activity {
         pie.setData(data);
 
         BarChartView bar = (BarChartView)findViewById(R.id.bar);
+        bar.setColorPalette(ColorPalette.getPalette(PaletteType.PRIMARY));
         bar.setData(data);
     }
 }

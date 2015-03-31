@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.github.mata1.simpledroidchart.data.DataSet;
+import com.github.mata1.simpledroidchart.palettes.ColorPalette;
+import com.github.mata1.simpledroidchart.palettes.PaletteType;
 
 /**
  * Abstract class for chart view
@@ -19,29 +21,12 @@ public abstract class ChartView extends View {
 
     protected DataSet mDataSet;
 
+    protected ColorPalette mColorPalette;
+
     protected boolean mShowHorGrid;
 
     protected boolean mShowValues;
 
-    // pastel colors palette
-    public static final int[] PASTEL_PALETTE = new int[] {
-            Color.rgb(246, 150, 121),
-            Color.rgb(249, 173, 129),
-            Color.rgb(253, 198, 137),
-            Color.rgb(255, 247, 153),
-            Color.rgb(196, 223, 155),
-            Color.rgb(163, 211, 156),
-            Color.rgb(130, 202, 156),
-            Color.rgb(122, 204, 200),
-            Color.rgb(109, 207, 246),
-            Color.rgb(125, 167, 217),
-            Color.rgb(131, 147, 202),
-            Color.rgb(135, 129, 189),
-            Color.rgb(161, 134, 190),
-            Color.rgb(189, 140, 191),
-            Color.rgb(244, 154, 193),
-            Color.rgb(245, 152, 157)
-    };
 
     public ChartView(Context context, AttributeSet attrs)  {
         super(context, attrs);
@@ -70,6 +55,9 @@ public abstract class ChartView extends View {
 
         // init data
         mDataSet = new DataSet();
+
+        // init color palette
+        mColorPalette = ColorPalette.getPalette(PaletteType.PASTEL);
     }
 
     /**
@@ -143,6 +131,15 @@ public abstract class ChartView extends View {
      */
     public void setShowValues(boolean showValues) {
         mShowValues = showValues;
+        invalidate();
+    }
+
+    /**
+     * Set chart color palette
+     * @param colorPalette new color palette
+     */
+    public void setColorPalette(ColorPalette colorPalette) {
+        mColorPalette = colorPalette;
         invalidate();
     }
 
