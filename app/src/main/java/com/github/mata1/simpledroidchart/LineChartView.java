@@ -8,9 +8,6 @@ import android.util.AttributeSet;
 
 import com.github.mata1.simpledroidchart.data.DataEntry;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * View class for line charts
  */
@@ -93,16 +90,19 @@ public class LineChartView extends ChartView {
 
             // draw values
             if (mShowValues) {
-                String value = String.format(mDataSet.getMax() > 10 ? "%.0f" : "%.2f", a.getyValue());
-                canvas.drawText(value, ax, ay - mValuePaint.getTextSize(), mValuePaint);
+                canvas.drawText(a.getStringValue(mDataSet.getMax()),
+                        ax,
+                        ay - mValuePaint.getTextSize(),
+                        mValuePaint);
 
                 // last point
                 if (i == mDataSet.size() - 2) {
-                    value = String.format(mDataSet.getMax() > 10 ? "%.0f" : "%.2f", b.getyValue());
-                    canvas.drawText(value, bx, by - mValuePaint.getTextSize(), mValuePaint);
+                    canvas.drawText(b.getStringValue(mDataSet.getMax()),
+                            bx,
+                            by - mValuePaint.getTextSize(),
+                            mValuePaint);
                 }
             }
-
         }
     }
 

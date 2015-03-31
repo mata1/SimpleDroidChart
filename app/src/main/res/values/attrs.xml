@@ -7,6 +7,18 @@
         <attr name="gridColor" format="color"/>
         <attr name="chartColor" format="color"/>
         <attr name="showValues" format="boolean"/>
+        <attr name="colorPalette" format="enum">
+            <enum name="pastel" value="0"/>
+            <enum name="primary" value="1"/>
+            <enum name="browns" value="2"/>
+            <enum name="grayscale" value="3"/>
+            <enum name="giantGoldfish" value="4"/>
+            <enum name="adriftInDreams" value="5"/>
+            <enum name="cake" value="6"/>
+            <enum name="oceanFive" value="7"/>
+            <enum name="provoking" value="8"/>
+            <enum name="mellonBall" value="9"/>
+        </attr>
     </declare-styleable>
 
     <declare-styleable name="LineChartView">

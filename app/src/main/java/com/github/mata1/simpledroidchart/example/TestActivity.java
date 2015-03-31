@@ -39,7 +39,6 @@ public class TestActivity extends Activity {
         data.add(new DataEntry("Dravograd", 0.2f));*/
 
         LineChartView line = (LineChartView)findViewById(R.id.line);
-        line.setColorPalette(ColorPalette.getPalette(PaletteType.CAKE));
         line.setData(data);
 
         PieChartView pie = (PieChartView)findViewById(R.id.pie);
@@ -47,7 +46,6 @@ public class TestActivity extends Activity {
         pie.setData(data);
 
         BarChartView bar = (BarChartView)findViewById(R.id.bar);
-        bar.setColorPalette(ColorPalette.getPalette(PaletteType.GRAYSCALE));
         bar.setData(data);
     }
 }

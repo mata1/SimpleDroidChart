@@ -65,12 +65,11 @@ public class PieChartView extends ChartView {
 
             // draw values
             if (mShowValues) {
-                String value = String.format(mDataSet.getMax() > 10 ? "%.0f" : "%.2f", entry.getyValue());
                 double cos = Math.cos(Math.toRadians(angle + part/2)) * r;
                 double sin = Math.sin(Math.toRadians(angle + part/2)) * r;
-                canvas.drawText(value,
+                canvas.drawText(entry.getStringValue(mDataSet.getMax()),
                         arcRect.centerX() + (float)cos,
-                        arcRect.centerY() + (float)sin,
+                        arcRect.centerY() + (float)sin + mValuePaint.getTextSize()/2,
                         mValuePaint);
             }
 

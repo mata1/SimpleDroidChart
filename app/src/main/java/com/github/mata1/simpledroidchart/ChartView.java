@@ -73,6 +73,11 @@ public abstract class ChartView extends View {
             mGridPaint.setStrokeWidth(a.getFloat(R.styleable.ChartView_gridStrokeWidth, 1));
             mGridPaint.setColor(a.getColor(R.styleable.ChartView_gridColor, Color.LTGRAY));
             mShowValues = a.getBoolean(R.styleable.ChartView_showValues, false);
+
+            int paletteOrdinal = a.getInt(R.styleable.ChartView_colorPalette, 0);
+            if (paletteOrdinal >= 0 && paletteOrdinal < PaletteType.values().length)
+                mColorPalette = ColorPalette.getPalette(PaletteType.values()[paletteOrdinal]);
+
         } finally {
             a.recycle();
         }

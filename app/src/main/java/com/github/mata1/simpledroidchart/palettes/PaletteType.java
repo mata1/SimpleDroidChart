@@ -2,8 +2,6 @@ package com.github.mata1.simpledroidchart.palettes;
 
 import android.graphics.Color;
 
-import java.util.Random;
-
 /**
  * Different color palettes
  * http://www.colourlovers.com/palettes/most-loved/all-time/meta
