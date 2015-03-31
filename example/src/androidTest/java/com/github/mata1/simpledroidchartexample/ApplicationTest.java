@@ -1,4 +1,4 @@
-package com.github.mata1.simpledroidchart;
+package com.github.mata1.simpledroidchartexample;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
