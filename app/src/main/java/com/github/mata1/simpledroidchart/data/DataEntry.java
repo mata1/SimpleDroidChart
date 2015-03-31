@@ -52,4 +52,18 @@ public class DataEntry implements Comparable {
     public float getyValue() {
         return yValue;
     }
+
+    /**
+     * Get Y value in String format with relative decimal places
+     * @param maxValue maximum value in data set
+     * @return Y value in String format
+     */
+    public String getStringValue(float maxValue) {
+        int decimals = 0;
+        if (maxValue < 10)
+            decimals++;
+        if (maxValue < 1)
+            decimals++;
+        return String.format("%." + decimals + "f", yValue);
+    }
 }

@@ -1,6 +1,7 @@
 package com.github.mata1.simpledroidchart;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
@@ -14,20 +15,38 @@ public class LineChartView extends ChartView {
 
     private boolean mShowVerGrid;
 
-    private boolean mShowLines = true;
-    private boolean mShowPoints = true;
+    private boolean mShowLines;
+    private boolean mShowPoints;
 
     public LineChartView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initAttributes(attrs);
+    }
+
+    public LineChartView(Context context, AttributeSet attrs, int defStyle) {
+        this(context, attrs);
+    }
+
+    /**
+     * Initialize XML attributes
+     * @param attrs xml attribute set
+     */
+    private void initAttributes(AttributeSet attrs) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LineChartView);
+        try {
+            mShowLines = a.getBoolean(R.styleable.LineChartView_showLines, true);
+            mShowPoints = a.getBoolean(R.styleable.LineChartView_showPoints, true);
+            mShowVerGrid = a.getBoolean(R.styleable.LineChartView_showVerticalGrid, false);
+        } finally {
+            a.recycle();
+        }
     }
 
     protected void onDraw(Canvas canvas) {
         // draw horizontal grid
         if (mShowHorGrid) {
-            float nLines = getHeight() / 50;
-            float dist = getHeight() / nLines;
-            for (int i = 0; i <= nLines; i++)
-                canvas.drawLine(0, i * dist, getWidth(), i * dist, mGridPaint);
+            for (Float point : mDataSet.getMajorPoints())
+                canvas.drawLine(0, calcY(point), getWidth(), calcY(point), mGridPaint);
         }
         // draw vertical grid
         if (mShowVerGrid) {
@@ -38,7 +57,7 @@ public class LineChartView extends ChartView {
         }
 
         // draw chart
-        int j = 0; // index for palette
+        mColorPalette.reset();
         for (int i = 0; i < mDataSet.size() - 1; i++) {
             DataEntry a = mDataSet.get(i);
             DataEntry b = mDataSet.get(i + 1);
@@ -58,18 +77,32 @@ public class LineChartView extends ChartView {
             if (mShowPoints) {
                 int r = 8; // point radius TODO set relative to view size or constant
 
-                mChartPaint.setColor(PASTEL_PALETTE[j % PASTEL_PALETTE.length]);
-                j += 5;
+                mChartPaint.setColor(mColorPalette.next());
                 canvas.drawCircle(ax, ay, r, mChartPaint);
-                //canvas.drawText(a.getyValue()+"", fx + 10, ay, mChartPaint); // DEBUG
+                //canvas.drawText(a.getyValue()+"", ax + 10, ay, mChartPaint); // DEBUG
 
                 // last point
                 if (i == mDataSet.size() - 2) {
-                    mChartPaint.setColor(PASTEL_PALETTE[j % PASTEL_PALETTE.length]);
+                    mChartPaint.setColor(mColorPalette.next());
                     canvas.drawCircle(bx, by, r, mChartPaint);
                 }
             }
 
+            // draw values
+            if (mShowValues) {
+                canvas.drawText(a.getStringValue(mDataSet.getMax()),
+                        ax,
+                        ay - mValuePaint.getTextSize(),
+                        mValuePaint);
+
+                // last point
+                if (i == mDataSet.size() - 2) {
+                    canvas.drawText(b.getStringValue(mDataSet.getMax()),
+                            bx,
+                            by - mValuePaint.getTextSize(),
+                            mValuePaint);
+                }
+            }
         }
     }
 

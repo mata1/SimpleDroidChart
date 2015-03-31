@@ -18,7 +18,17 @@ public class BarChartView extends ChartView {
 
     public BarChartView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
+    }
 
+    public BarChartView(Context context, AttributeSet attrs, int defStyle) {
+        this(context, attrs);
+    }
+
+    /**
+     * Initialize objects
+     */
+    private void init() {
         barRect = new RectF();
     }
 
@@ -27,23 +37,46 @@ public class BarChartView extends ChartView {
         if (mDataSet.size() == 0)
             return;
 
+        // draw horizontal grid
+        if (mShowHorGrid) {
+            for (Float point : mDataSet.getMajorPoints())
+                canvas.drawLine(0, calcY(point), getWidth(), calcY(point), mGridPaint);
+        }
+
         int i = 0; // index for bar
-        int j = 0; // index for palette
-        int width = (getWidth() - getPaddingLeft() - getPaddingRight()) / mDataSet.size();
+        int width = (getWidth() - getPaddingLeft() - getPaddingRight()) / mDataSet.size(); // bar width
 
+        mColorPalette.reset();
         for (DataEntry entry : mDataSet) {
-            mChartPaint.setColor(PASTEL_PALETTE[(j % PASTEL_PALETTE.length)]);
+            mChartPaint.setColor(mColorPalette.next());
 
-            float relY = entry.getyValue() / mDataSet.getMax();
-            barRect.set(i * width + getPaddingLeft() + GAP_WIDTH/2,
-                    getHeight() - relY * getHeight() + getPaddingTop(),
-                    i * width + width + getPaddingLeft() - GAP_WIDTH/2,
+            float x = i * width + getPaddingLeft();
+            barRect.set(x + GAP_WIDTH/2,
+                    calcY(entry.getyValue()),
+                    x + width - GAP_WIDTH/2,
                     getHeight());
 
             canvas.drawRect(barRect, mChartPaint);
 
+            // draw values
+            if (mShowValues) {
+                canvas.drawText(entry.getStringValue(mDataSet.getMax()),
+                        x + width/2,
+                        calcY(entry.getyValue()) + mValuePaint.getTextSize()*1.3f,
+                        mValuePaint);
+            }
+
             i++;
-            j += 5;
         }
+    }
+
+    /**
+     * Calculate data Y position for given value
+     * @param value data value
+     * @return calculated Y position
+     */
+    private float calcY(float value) {
+        float relY = value / mDataSet.getMax();
+        return getHeight() - relY * (getHeight() - getPaddingTop());
     }
 }

@@ -1,11 +1,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TestActivity"
     android:orientation="vertical"
     android:padding="10dp">
 
     <com.github.mata1.simpledroidchart.BarChartView
+        custom:showHorizontalGrid="true"
+        custom:showValues="true"
+        custom:colorPalette="browns"
+
         android:layout_weight="1"
         android:id="@+id/bar"
         android:padding="20dp"
@@ -14,6 +20,16 @@
 
 
     <com.github.mata1.simpledroidchart.LineChartView
+        custom:strokeWidth="3"
+        custom:showHorizontalGrid="true"
+        custom:showVerticalGrid="true"
+        custom:showLines="true"
+        custom:showPoints="true"
+        custom:gridColor="#33ffaa00"
+        custom:gridStrokeWidth="2"
+        custom:showValues="true"
+        custom:colorPalette="pastel"
+
         android:layout_weight="1"
         android:id="@+id/line"
         android:padding="20dp"
@@ -24,6 +40,9 @@
 
 
     <com.github.mata1.simpledroidchart.PieChartView
+        custom:strokeWidth="50"
+        custom:showValues="true"
+
         android:layout_weight="1"
         android:id="@+id/pie"
         android:padding="10dp"
