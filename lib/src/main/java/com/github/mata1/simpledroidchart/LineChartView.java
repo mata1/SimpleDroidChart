@@ -45,12 +45,12 @@ public class LineChartView extends ChartView {
 
     protected void onDraw(Canvas canvas) {
         // draw horizontal grid
-        if (mShowHorGrid) {
+        if (mShowHorGrid && !mDataSet.isEmpty()) {
             for (Float point : mDataSet.getMajorPoints())
                 canvas.drawLine(0, calcY(point), getWidth(), calcY(point), mGridPaint);
         }
         // draw vertical grid
-        if (mShowVerGrid) {
+        if (mShowVerGrid && !mDataSet.isEmpty()) {
             for (int i = -2; i < mDataSet.size() + 2; i++) {
                 float x = calcX(i);
                 canvas.drawLine(x, getHeight(), x, 0, mGridPaint);
