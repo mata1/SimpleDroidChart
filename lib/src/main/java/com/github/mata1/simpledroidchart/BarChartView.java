@@ -44,7 +44,7 @@ public class BarChartView extends ChartView {
         }
 
         int i = 0; // index for bar
-        int width = (getWidth() - getPaddingLeft() - getPaddingRight()) / mDataSet.size(); // bar width
+        float width = (getWidth() - getPaddingLeft() - getPaddingRight()) / (float)mDataSet.size(); // bar width
 
         mColorPalette.reset();
         for (DataEntry entry : mDataSet) {

@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.github.mata1.simpledroidchart.data.DataEntry;
 
@@ -50,7 +51,7 @@ public class LineChartView extends ChartView {
         }
         // draw vertical grid
         if (mShowVerGrid) {
-            for (int i = 0; i < mDataSet.size(); i++) {
+            for (int i = -2; i < mDataSet.size() + 2; i++) {
                 float x = calcX(i);
                 canvas.drawLine(x, getHeight(), x, 0, mGridPaint);
             }
@@ -112,7 +113,7 @@ public class LineChartView extends ChartView {
      * @return calculated X position
      */
     private float calcX(int i) {
-        return (getWidth() - getPaddingRight() - getPaddingLeft()) / (mDataSet.size() - 1) * i + getPaddingLeft();
+        return (getWidth() - getPaddingRight() - getPaddingLeft()) / (mDataSet.size() - 1f) * i + getPaddingLeft();
     }
 
     /**

@@ -51,7 +51,7 @@ public class DataSet extends ArrayList<DataEntry> {
         while (div > diff)
             div /= 10;
 
-        for (float i = 0/*div*/; i < div * 10; i += div/2)
+        for (float i = 0/*div*/; i <= getMax() * 10; i += div/2)
             points.add(i);
 
         return points;

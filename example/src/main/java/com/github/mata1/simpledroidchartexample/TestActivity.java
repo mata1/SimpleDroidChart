@@ -10,6 +10,8 @@ import com.github.mata1.simpledroidchart.data.DataEntry;
 import com.github.mata1.simpledroidchart.data.DataSet;
 import com.github.mata1.simpledroidchart.palettes.ColorPalette;
 
+import java.util.Random;
+
 public class TestActivity extends Activity {
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,10 @@ public class TestActivity extends Activity {
         data.add(new DataEntry("Dravograd", 0.2f));
         data.add(new DataEntry("Dravograd", 0.3f));
         data.add(new DataEntry("Dravograd", 0.2f))*/
+        /*Random r = new Random();
+        data.clear();
+        for (int i = 0; i < 100; i++)
+            data.add(new DataEntry(r.nextInt(10)+20));*/
 
         LineChartView line = (LineChartView)findViewById(R.id.line);
         line.setData(data);
