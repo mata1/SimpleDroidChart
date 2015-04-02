@@ -9,11 +9,16 @@ import java.util.List;
  */
 public class DataSet extends ArrayList<DataEntry> {
 
+    private float mMin, mMax;
+    private boolean mMinSet, mMaxSet;
+
     /**
      * Get maximum value from data set TODO check if empty
      * @return maximum Y value
      */
     public float getMax() {
+        if (mMaxSet || isEmpty())
+            return mMax;
         return Collections.max(this).getyValue();
     }
 
@@ -22,6 +27,8 @@ public class DataSet extends ArrayList<DataEntry> {
      * @return minimum Y value
      */
     public float getMin() {
+        if (mMinSet || isEmpty())
+            return mMin;
         return Collections.min(this).getyValue();
     }
 
@@ -58,5 +65,23 @@ public class DataSet extends ArrayList<DataEntry> {
             points.add(i);
 
         return points;
+    }
+
+    public void setMin(float min) {
+        mMin = min;
+        mMinSet = true;
+    }
+
+    public void resetMin() {
+        mMinSet = false;
+    }
+
+    public void setMax(float max) {
+        mMax = max;
+        mMaxSet = true;
+    }
+
+    public void resetMax() {
+        mMaxSet = false;
     }
 }

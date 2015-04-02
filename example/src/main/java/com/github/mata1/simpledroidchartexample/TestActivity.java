@@ -24,6 +24,8 @@ public class TestActivity extends Activity {
         data.add(new DataEntry("Maribor", 20.0F));
         data.add(new DataEntry("Celje", 9.0F));
         data.add(new DataEntry("Koper", 26.0F));
+        data.setMin(15);
+        data.setMax(40);
 
         // horizontal grid test
         /*data.clear();
@@ -43,9 +45,9 @@ public class TestActivity extends Activity {
             data.add(new DataEntry(r.nextInt(10)+20));*/
         // TODO fix memory leaks, with getMajorPoints
 
-        data.clear();
+        /*data.clear();
         for (int i = 0; i < 10; i++)
-            data.add(new DataEntry(20));
+            data.add(new DataEntry(20));*/
 
         LineChartView line = (LineChartView)findViewById(R.id.line);
         line.setData(data);
