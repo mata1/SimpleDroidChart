@@ -41,6 +41,11 @@ public class TestActivity extends Activity {
         data.clear();
         for (int i = 0; i < 100; i++)
             data.add(new DataEntry(r.nextInt(10)+20));*/
+        // TODO fix memory leaks, with getMajorPoints
+
+        data.clear();
+        for (int i = 0; i < 10; i++)
+            data.add(new DataEntry(20));
 
         LineChartView line = (LineChartView)findViewById(R.id.line);
         line.setData(data);

@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import com.github.mata1.simpledroidchart.data.DataEntry;
 
@@ -122,7 +121,10 @@ public class LineChartView extends ChartView {
      * @return calculated Y position
      */
     private float calcY(float value) {
-        float relY = (value - mDataSet.getMin()) / (mDataSet.getMax() - mDataSet.getMin());
+        float min = mDataSet.getMin(), max = mDataSet.getMax();
+        if (max - min == 0)
+            return getHeight()/2;
+        float relY = (value - min) / (max - min);
         return getHeight() - (relY * (getHeight() - getPaddingTop() - getPaddingBottom()) + getPaddingBottom());
     }
 

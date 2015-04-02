@@ -10,7 +10,7 @@ import java.util.List;
 public class DataSet extends ArrayList<DataEntry> {
 
     /**
-     * Get maximum value from data set
+     * Get maximum value from data set TODO check if empty
      * @return maximum Y value
      */
     public float getMax() {
@@ -18,7 +18,7 @@ public class DataSet extends ArrayList<DataEntry> {
     }
 
     /**
-     * Get minimum value from data set
+     * Get minimum value from data set TODO check if empty
      * @return minimum Y value
      */
     public float getMin() {
@@ -47,6 +47,9 @@ public class DataSet extends ArrayList<DataEntry> {
 
         float diff = getMax() - getMin();
         float div = 10000000; // TODO optimize
+
+        if (diff == 0 && getMax() != 0)
+            diff = getMax();
 
         while (div > diff)
             div /= 10;
