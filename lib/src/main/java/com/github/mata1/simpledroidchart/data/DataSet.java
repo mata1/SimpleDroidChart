@@ -1,5 +1,7 @@
 package com.github.mata1.simpledroidchart.data;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -52,17 +54,20 @@ public class DataSet extends ArrayList<DataEntry> {
     public List<Float> getMajorPoints() {
         List<Float> points = new ArrayList<>();
 
-        float diff = getMax() - getMin();
-        float div = 10000000; // TODO optimize
-
-        if (diff == 0 && getMax() != 0)
+        float diff = Math.abs(getMax() - getMin());
+        if (diff == 0)
             diff = getMax();
 
-        while (div > diff)
-            div /= 10;
+        int log = (int)Math.ceil(Math.log10(diff));
+        float div = (float)Math.pow(10, log - 1);
 
-        for (float i = 0/*div*/; i <= getMax() * 10; i += div/2)
+        float min = (float)Math.ceil(getMin()/div - 1) * div;
+        float max = (float)Math.floor(getMax()/div + 1) * div;
+        Log.d("min max", min+" "+max);
+        for (float i = min; i <= max; i += div/2) {
+            Log.d("i", i+"");
             points.add(i);
+        }
 
         return points;
     }

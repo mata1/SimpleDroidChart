@@ -18,14 +18,17 @@ public class TestActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
+        /*
+        TEST DATA
+         */
         DataSet data = new DataSet();
         data.add(new DataEntry("Ljubljana", 30.0F));
         data.add(new DataEntry("Ravne", 13.0F));
         data.add(new DataEntry("Maribor", 20.0F));
         data.add(new DataEntry("Celje", 9.0F));
         data.add(new DataEntry("Koper", 26.0F));
-        data.setMin(15);
-        data.setMax(40);
+        //data.setMin(15);
+        //data.setMax(40);
 
         // horizontal grid test
         /*data.clear();
@@ -34,20 +37,43 @@ public class TestActivity extends Activity {
         data.add(new DataEntry("Maribor", 0.2f));
         data.add(new DataEntry("Celje", 0.09f));
         data.add(new DataEntry("Koper", 0.26f));
-        data.add(new DataEntry("Dravograd", 0.5f));
+        data.add(new DataEntry("Dravograd", 10f));
         data.add(new DataEntry("Dravograd", 0.1f));
         data.add(new DataEntry("Dravograd", 0.2f));
         data.add(new DataEntry("Dravograd", 0.3f));
-        data.add(new DataEntry("Dravograd", 0.2f))*/
+        data.add(new DataEntry("Dravograd", 0.2f));*/
+
+        // random numbers
         /*Random r = new Random();
         data.clear();
         for (int i = 0; i < 100; i++)
             data.add(new DataEntry(r.nextInt(10)+20));*/
-        // TODO fix memory leaks, with getMajorPoints
 
+        // equal numbers
         /*data.clear();
         for (int i = 0; i < 10; i++)
             data.add(new DataEntry(20));*/
+
+        // mixed negative positive numbers
+        data.clear();
+        data.add(new DataEntry("Ljubljana", -0.3f));
+        data.add(new DataEntry("Ravne", 0.13f));
+        data.add(new DataEntry("Maribor", -0.2f));
+        data.add(new DataEntry("Celje", 0.09f));
+        data.add(new DataEntry("Koper", 0.26f));
+
+        // all negative numbers
+        /*data.clear();
+        data.add(new DataEntry("Ljubljana", -30.0F));
+        data.add(new DataEntry("Ravne", -13.0F));
+        data.add(new DataEntry("Maribor", -20.0F));
+        data.add(new DataEntry("Celje", -9.0F));
+        data.add(new DataEntry("Koper", -26.0F));*/
+
+
+        /*
+        CHARTS
+         */
 
         LineChartView line = (LineChartView)findViewById(R.id.line);
         line.setData(data);
