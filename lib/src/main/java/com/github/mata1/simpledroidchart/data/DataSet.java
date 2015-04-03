@@ -1,7 +1,5 @@
 package com.github.mata1.simpledroidchart.data;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -63,11 +61,9 @@ public class DataSet extends ArrayList<DataEntry> {
 
         float min = (float)Math.ceil(getMin()/div - 1) * div;
         float max = (float)Math.floor(getMax()/div + 1) * div;
-        Log.d("min max", min+" "+max);
-        for (float i = min; i <= max; i += div/2) {
-            Log.d("i", i+"");
+
+        for (float i = Math.min(0, min); i <= max; i += div/2)
             points.add(i);
-        }
 
         return points;
     }

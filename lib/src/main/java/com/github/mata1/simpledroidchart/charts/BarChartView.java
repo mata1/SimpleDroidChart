@@ -1,10 +1,12 @@
-package com.github.mata1.simpledroidchart;
+package com.github.mata1.simpledroidchart.charts;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
+import com.github.mata1.simpledroidchart.R;
 import com.github.mata1.simpledroidchart.data.DataEntry;
 
 /**
@@ -12,24 +14,45 @@ import com.github.mata1.simpledroidchart.data.DataEntry;
  */
 public class BarChartView extends ChartView {
 
-    private static final int GAP_WIDTH = 10; // gap between two columns
+    private RectF mBarRect;
 
-    private RectF barRect;
+    private int mGapWidth = 10; // gap between two columns
+
+    private boolean mShowHorGrid;
 
     public BarChartView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
     }
 
     public BarChartView(Context context, AttributeSet attrs, int defStyle) {
-        this(context, attrs);
+        super(context, attrs, defStyle);
     }
 
     /**
      * Initialize objects
      */
-    private void init() {
-        barRect = new RectF();
+    @Override
+    protected void init() {
+        super.init();
+
+        mBarRect = new RectF();
+    }
+
+    /**
+     * Initialize XML attributes
+     * @param attrs xml attribute set
+     */
+    @Override
+    protected void initAttributes(AttributeSet attrs) {
+        super.initAttributes(attrs);
+
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.BarChartView);
+        try {
+            mGapWidth = a.getInt(R.styleable.BarChartView_gapWidth, 10);
+            mShowHorGrid = a.getBoolean(R.styleable.LineChartView_showHorizontalGrid, false);
+        } finally {
+            a.recycle();
+        }
     }
 
     protected void onDraw(Canvas canvas)
@@ -51,16 +74,16 @@ public class BarChartView extends ChartView {
             mChartPaint.setColor(mColorPalette.next());
 
             float x = i * width + getPaddingLeft();
-            barRect.set(x + GAP_WIDTH/2,
+            mBarRect.set(x + mGapWidth / 2f,
                     calcY(entry.getyValue()),
-                    x + width - GAP_WIDTH/2,
+                    x + width - mGapWidth / 2f,
                     getHeight());
 
-            canvas.drawRect(barRect, mChartPaint);
+            canvas.drawRect(mBarRect, mChartPaint);
 
             // draw values
             if (mShowValues) {
-                canvas.drawText(entry.getStringValue(mDataSet.getMax()),
+                canvas.drawText(entry.getStringValue(),
                         x + width/2,
                         calcY(entry.getyValue()) + mValuePaint.getTextSize()*1.3f,
                         mValuePaint);
@@ -78,5 +101,23 @@ public class BarChartView extends ChartView {
     private float calcY(float value) {
         float relY = value / mDataSet.getMax();
         return getHeight() - relY * (getHeight() - getPaddingTop());
+    }
+
+    /**
+     * Set gap between bars
+     * @param gapWidth gap width
+     */
+    public void setGapWidth(int gapWidth) {
+        mGapWidth = gapWidth;
+        invalidate();
+    }
+
+    /**
+     * Show horizontal grid lines
+     * @param showHorGrid whether to show horizontal grid
+     */
+    public void setShowHorizontalGrid(boolean showHorGrid) {
+        mShowHorGrid = showHorGrid;
+        invalidate();
     }
 }

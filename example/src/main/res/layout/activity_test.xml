@@ -7,10 +7,11 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <com.github.mata1.simpledroidchart.BarChartView
+    <com.github.mata1.simpledroidchart.charts.BarChartView
         custom:showHorizontalGrid="true"
         custom:showValues="true"
-        custom:colorPalette="browns"
+        custom:colorPalette="oceanFive"
+        custom:gapWidth="4"
 
         android:layout_weight="1"
         android:id="@+id/bar"
@@ -19,7 +20,7 @@
         android:layout_height="170dp" />
 
 
-    <com.github.mata1.simpledroidchart.LineChartView
+    <com.github.mata1.simpledroidchart.charts.LineChartView
         custom:strokeWidth="3"
         custom:showHorizontalGrid="true"
         custom:showVerticalGrid="true"
@@ -39,7 +40,7 @@
         android:layout_height="170dp" />
 
 
-    <com.github.mata1.simpledroidchart.PieChartView
+    <com.github.mata1.simpledroidchart.charts.PieChartView
         custom:strokeWidth="50"
         custom:showValues="true"
 

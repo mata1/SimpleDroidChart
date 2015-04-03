@@ -1,4 +1,4 @@
-package com.github.mata1.simpledroidchart;
+package com.github.mata1.simpledroidchart.charts;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
 
+import com.github.mata1.simpledroidchart.R;
 import com.github.mata1.simpledroidchart.data.DataEntry;
 
 /**
@@ -13,30 +14,31 @@ import com.github.mata1.simpledroidchart.data.DataEntry;
  */
 public class LineChartView extends ChartView {
 
-    private boolean mShowVerGrid;
-
-    private boolean mShowLines;
-    private boolean mShowPoints;
+    private boolean mShowVerGrid, mShowHorGrid;
+    private boolean mShowLines, mShowPoints;
 
     public LineChartView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initAttributes(attrs);
     }
 
     public LineChartView(Context context, AttributeSet attrs, int defStyle) {
-        this(context, attrs);
+        super(context, attrs, defStyle);
     }
 
     /**
      * Initialize XML attributes
      * @param attrs xml attribute set
      */
-    private void initAttributes(AttributeSet attrs) {
+    @Override
+    protected void initAttributes(AttributeSet attrs) {
+        super.initAttributes(attrs);
+
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LineChartView);
         try {
             mShowLines = a.getBoolean(R.styleable.LineChartView_showLines, true);
             mShowPoints = a.getBoolean(R.styleable.LineChartView_showPoints, true);
             mShowVerGrid = a.getBoolean(R.styleable.LineChartView_showVerticalGrid, false);
+            mShowHorGrid = a.getBoolean(R.styleable.LineChartView_showHorizontalGrid, false);
         } finally {
             a.recycle();
         }
@@ -90,14 +92,14 @@ public class LineChartView extends ChartView {
 
             // draw values
             if (mShowValues) {
-                canvas.drawText(a.getStringValue(mDataSet.getMax()),
+                canvas.drawText(a.getStringValue(),
                         ax,
                         ay - mValuePaint.getTextSize(),
                         mValuePaint);
 
                 // last point
                 if (i == mDataSet.size() - 2) {
-                    canvas.drawText(b.getStringValue(mDataSet.getMax()),
+                    canvas.drawText(b.getStringValue(),
                             bx,
                             by - mValuePaint.getTextSize(),
                             mValuePaint);
@@ -152,6 +154,15 @@ public class LineChartView extends ChartView {
      */
     public void setShowVerticalGrid(boolean showVerGrid) {
         mShowVerGrid = showVerGrid;
+        invalidate();
+    }
+
+    /**
+     * Show horizontal grid lines
+     * @param showHorGrid whether to show horizontal grid
+     */
+    public void setShowHorizontalGrid(boolean showHorGrid) {
+        mShowHorGrid = showHorGrid;
         invalidate();
     }
 }

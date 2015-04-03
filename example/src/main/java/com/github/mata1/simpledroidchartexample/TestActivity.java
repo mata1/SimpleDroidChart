@@ -3,9 +3,9 @@ package com.github.mata1.simpledroidchartexample;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.github.mata1.simpledroidchart.BarChartView;
-import com.github.mata1.simpledroidchart.LineChartView;
-import com.github.mata1.simpledroidchart.PieChartView;
+import com.github.mata1.simpledroidchart.charts.BarChartView;
+import com.github.mata1.simpledroidchart.charts.LineChartView;
+import com.github.mata1.simpledroidchart.charts.PieChartView;
 import com.github.mata1.simpledroidchart.data.DataEntry;
 import com.github.mata1.simpledroidchart.data.DataSet;
 import com.github.mata1.simpledroidchart.palettes.ColorPalette;
@@ -44,10 +44,10 @@ public class TestActivity extends Activity {
         data.add(new DataEntry("Dravograd", 0.2f));*/
 
         // random numbers
-        /*Random r = new Random();
+        Random r = new Random();
         data.clear();
-        for (int i = 0; i < 100; i++)
-            data.add(new DataEntry(r.nextInt(10)+20));*/
+        for (int i = 0; i < 15; i++)
+            data.add(new DataEntry(r.nextInt(40)+10));
 
         // equal numbers
         /*data.clear();
@@ -55,12 +55,12 @@ public class TestActivity extends Activity {
             data.add(new DataEntry(20));*/
 
         // mixed negative positive numbers
-        data.clear();
-        data.add(new DataEntry("Ljubljana", -0.3f));
-        data.add(new DataEntry("Ravne", 0.13f));
-        data.add(new DataEntry("Maribor", -0.2f));
-        data.add(new DataEntry("Celje", 0.09f));
-        data.add(new DataEntry("Koper", 0.26f));
+        /*data.clear();
+        data.add(new DataEntry(-3));
+        data.add(new DataEntry(13));
+        data.add(new DataEntry(-2));
+        data.add(new DataEntry(9));
+        data.add(new DataEntry(26));*/
 
         // all negative numbers
         /*data.clear();
