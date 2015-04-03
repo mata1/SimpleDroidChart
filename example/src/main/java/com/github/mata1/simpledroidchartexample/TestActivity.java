@@ -3,14 +3,13 @@ package com.github.mata1.simpledroidchartexample;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.github.mata1.simpledroidchart.legend.LegendView;
 import com.github.mata1.simpledroidchart.charts.BarChartView;
 import com.github.mata1.simpledroidchart.charts.LineChartView;
 import com.github.mata1.simpledroidchart.charts.PieChartView;
 import com.github.mata1.simpledroidchart.data.DataEntry;
 import com.github.mata1.simpledroidchart.data.DataSet;
 import com.github.mata1.simpledroidchart.palettes.ColorPalette;
-
-import java.util.Random;
 
 public class TestActivity extends Activity {
 
@@ -44,10 +43,10 @@ public class TestActivity extends Activity {
         data.add(new DataEntry("Dravograd", 0.2f));*/
 
         // random numbers
-        Random r = new Random();
+        /*Random r = new Random();
         data.clear();
         for (int i = 0; i < 15; i++)
-            data.add(new DataEntry(r.nextInt(40)+10));
+            data.add(new DataEntry(r.nextInt(40)+10));*/
 
         // equal numbers
         /*data.clear();
@@ -84,5 +83,8 @@ public class TestActivity extends Activity {
 
         BarChartView bar = (BarChartView)findViewById(R.id.bar);
         bar.setData(data);
+
+        LegendView legendView = (LegendView)findViewById(R.id.legend);
+        legendView.setLegend(bar.getLegend());
     }
 }

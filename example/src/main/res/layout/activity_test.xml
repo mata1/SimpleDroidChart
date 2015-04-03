@@ -41,12 +41,20 @@
 
 
     <com.github.mata1.simpledroidchart.charts.PieChartView
+        android:visibility="gone"
         custom:strokeWidth="50"
         custom:showValues="true"
 
         android:layout_weight="1"
         android:id="@+id/pie"
         android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="170dp" />
+
+    <com.github.mata1.simpledroidchart.legend.LegendView
+        android:id="@+id/legend"
+        android:padding="10dp"
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="170dp" />
 

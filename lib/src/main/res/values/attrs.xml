@@ -33,4 +33,8 @@
         <attr name="gapWidth" format="integer"/>
         <attr name="showHorizontalGrid"/>
     </declare-styleable>
+    
+    <declare-styleable name="LegendView">
+
+    </declare-styleable>
 </resources>
