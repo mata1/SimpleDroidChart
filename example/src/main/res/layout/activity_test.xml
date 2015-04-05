@@ -19,6 +19,17 @@
         android:layout_width="match_parent"
         android:layout_height="170dp" />
 
+    <com.github.mata1.simpledroidchart.legend.LegendView
+        custom:iconGap="10"
+        custom:textColor="#002255"
+        custom:iconType="circle"
+        custom:showValue="true"
+
+        android:id="@+id/legend"
+        android:padding="10dp"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="170dp" />
 
     <com.github.mata1.simpledroidchart.charts.LineChartView
         custom:strokeWidth="3"
@@ -48,13 +59,6 @@
         android:layout_weight="1"
         android:id="@+id/pie"
         android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="170dp" />
-
-    <com.github.mata1.simpledroidchart.legend.LegendView
-        android:id="@+id/legend"
-        android:padding="10dp"
-        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="170dp" />
 

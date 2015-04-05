@@ -4,7 +4,7 @@ import com.github.mata1.simpledroidchart.data.DataSet;
 import com.github.mata1.simpledroidchart.palettes.ColorPalette;
 
 /**
- * Created by matej on 04/04/15.
+ * Container for chart data needed for Legend View
  */
 public class Legend {
 
@@ -16,10 +16,18 @@ public class Legend {
         mColorPalette = colorPalette;
     }
 
+    /**
+     * Get legend data set
+     * @return legend data set
+     */
     public DataSet getDataSet() {
         return mDataSet;
     }
 
+    /**
+     * Get legend color palette
+     * @return legend color palette
+     */
     public ColorPalette getColorPalette() {
         return mColorPalette;
     }

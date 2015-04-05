@@ -1,16 +1,19 @@
 package com.github.mata1.simpledroidchart.legend;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.github.mata1.simpledroidchart.R;
 import com.github.mata1.simpledroidchart.data.DataEntry;
 
 /**
- * Created by matej on 03/04/15.
+ * View displaying chart legend
  */
 public class LegendView extends View {
 
@@ -22,61 +25,98 @@ public class LegendView extends View {
     private Legend mLegend;
     private IconType mIconType;
 
-    private static final int PAD = 5;
+    private int mTextColor;
+    private int mIconGap;
+    private boolean mShowValue;
 
     public LegendView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-        mPaint.setTextSize(18);
-
-        mIconType = IconType.CIRCLE;
+        init();
+        initAttributes(attrs);
     }
 
     public LegendView(Context context, AttributeSet attrs, int defStyle) {
         this(context, attrs);
     }
 
+    /**
+     * Initialize objects
+     */
+    private void init() {
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
+        mPaint.setTypeface(Typeface.DEFAULT_BOLD);
+
+        mIconType = IconType.SQUARE;
+    }
+
+    /**
+     * Initialize XML attributes
+     * @param attrs xml attribute set
+     */
+    private void initAttributes(AttributeSet attrs) {
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.LegendView);
+        try {
+            mTextColor = a.getColor(R.styleable.LegendView_textColor, Color.BLACK);
+            mShowValue = a.getBoolean(R.styleable.LegendView_showValue, false);
+            mIconGap = a.getInteger(R.styleable.LegendView_iconGap, 6);
+
+            int iconOrdinal = a.getInt(R.styleable.LegendView_iconType, 0);
+            if (iconOrdinal >= 0 && iconOrdinal < IconType.values().length)
+                mIconType = IconType.values()[iconOrdinal];
+
+        } finally {
+            a.recycle();
+        }
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
-        if (mLegend.getDataSet() == null || mLegend.getDataSet().isEmpty())
+        if (mLegend == null || mLegend.getDataSet().isEmpty())
             return;
 
-        float part = (getHeight() - getPaddingTop() - getPaddingBottom()) / ((float)mLegend.getDataSet().size() + 0);
+        float height = getHeight() - getPaddingTop() - getPaddingBottom() - (mLegend.getDataSet().size() - 1) * mIconGap;
+        float part = height / mLegend.getDataSet().size();
         int i = 0;
+
+        mPaint.setTextSize(part / 2);
 
         mLegend.getColorPalette().reset();
         for (DataEntry entry : mLegend.getDataSet()) {
             mPaint.setColor(mLegend.getColorPalette().next());
 
+            float y = i * (part + mIconGap);
+
             // draw icon
             switch (mIconType) {
                 case CIRCLE:
-                    float r = part/2 - PAD;
+                    float r = part/2;
                     canvas.drawCircle(
-                            getPaddingLeft() + r + PAD, // x
-                            i * part + part/2 + getPaddingTop(), // y
+                            r + getPaddingLeft(), // x
+                            y + r + getPaddingTop(), // y
                             r, // radius
                             mPaint
                     );
                     break;
                 case SQUARE:
                     canvas.drawRect(
-                            getPaddingLeft() + PAD, // left
-                            i * part + PAD + getPaddingTop(), // top
-                            getPaddingLeft() + part - PAD, // right
-                            i * part + part - PAD + getPaddingTop(), // bottom
+                            getPaddingLeft(), // left
+                            y + getPaddingTop(), // top
+                            part + getPaddingLeft(), // right
+                            y + part + getPaddingTop(), // bottom
                             mPaint
                     );
                     break;
             }
 
             // draw text
-            mPaint.setColor(Color.BLACK);
-            canvas.drawText(entry.getLabel(),
-                    getPaddingLeft() + part + PAD, // x
-                    i * part + part/2 + mPaint.getTextSize()/2 + getPaddingTop(), // y
+            mPaint.setColor(mTextColor);
+            String label = entry.getLabel();
+            if (mShowValue)
+                label += String.format(" (%s)", entry.getStringValue());
+            canvas.drawText(label,
+                    part + mIconGap + getPaddingLeft(), // x
+                    y + part/2 + mPaint.getTextSize()/3 + getPaddingTop(), // y
                     mPaint
             );
 
@@ -84,7 +124,102 @@ public class LegendView extends View {
         }
     }
 
+    /*@Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+
+        int desiredWidth = 100;
+        int desiredHeight = 100;
+
+        if (mLegend != null && !mLegend.getDataSet().isEmpty()) {
+            DataSet dataSet = mLegend.getDataSet();
+            float height = getHeight() - getPaddingTop() - getPaddingBottom() - (dataSet.size() - 1) * mIconGap;
+            float part = height / dataSet.size();
+            float labelW = 0;
+
+            for (DataEntry entry : dataSet)
+                 labelW = mPaint.measureText(entry.getLabel()) > labelW ? mPaint.measureText(entry.getLabel()) : labelW;
+
+            desiredWidth = getPaddingLeft() + (int)part + mIconGap + (int)labelW + getPaddingRight();
+            //desiredHeight = getPaddingTop() * dataSet.size() * part
+        }
+
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+        int width;
+        int height;
+
+        //Measure Width
+        if (widthMode == MeasureSpec.EXACTLY) {
+            //Must be this size
+            width = widthSize;
+        } else if (widthMode == MeasureSpec.AT_MOST) {
+            //Can't be bigger than...
+            width = Math.min(desiredWidth, widthSize);
+        } else {
+            //Be whatever you want
+            width = desiredWidth;
+        }
+
+        //Measure Height
+        if (heightMode == MeasureSpec.EXACTLY) {
+            //Must be this size
+            height = heightSize;
+        } else if (heightMode == MeasureSpec.AT_MOST) {
+            //Can't be bigger than...
+            height = Math.min(desiredHeight, heightSize);
+        } else {
+            //Be whatever you want
+            height = desiredHeight;
+        }
+
+        setMeasuredDimension(width, height);
+    }*/
+
+    /**
+     * Set chart data for legend
+     * @param legend chart data
+     */
     public void setLegend(Legend legend) {
         mLegend = legend;
+        invalidate();
+    }
+
+    /**
+     * Set label text color
+     * @param textColor label text color
+     */
+    public void setTextColor(int textColor) {
+        mTextColor = textColor;
+        invalidate();
+    }
+
+    /**
+     * Show data value beside text label
+     * @param showValue whether to show value
+     */
+    public void setShowValue(boolean showValue) {
+        mShowValue = showValue;
+        invalidate();
+    }
+
+    /**
+     * Set label icon type
+     * @param iconType label icon type
+     */
+    public void setIconType(IconType iconType) {
+        mIconType = iconType;
+        invalidate();
+    }
+
+    /**
+     * Set gap between icons
+     * @param iconGap gap between icons
+     */
+    public void setIconGap(int iconGap) {
+        mIconGap = iconGap;
+        invalidate();
     }
 }
