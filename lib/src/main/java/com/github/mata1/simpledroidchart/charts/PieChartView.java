@@ -1,4 +1,4 @@
-package com.github.mata1.simpledroidchart;
+package com.github.mata1.simpledroidchart.charts;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
+import com.github.mata1.simpledroidchart.R;
 import com.github.mata1.simpledroidchart.data.DataEntry;
 
 /**
@@ -20,18 +21,19 @@ public class PieChartView extends ChartView {
 
     public PieChartView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
-        initAttributes(attrs);
     }
 
     public PieChartView(Context context, AttributeSet attrs, int defStyle) {
-        this(context, attrs);
+        super(context, attrs, defStyle);
     }
 
     /**
      * Initialize objects
      */
-    private void init() {
+    @Override
+    protected void init() {
+        super.init();
+
         arcRect = new RectF();
         mChartPaint.setStyle(Paint.Style.STROKE);
     }
@@ -40,7 +42,10 @@ public class PieChartView extends ChartView {
      * Initialize XML attributes
      * @param attrs xml attribute set
      */
-    private void initAttributes(AttributeSet attrs) {
+    @Override
+    protected void initAttributes(AttributeSet attrs) {
+        super.initAttributes(attrs);
+
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ChartView);
         try {
             setStrokeWidth(a.getFloat(R.styleable.ChartView_strokeWidth, 60));
@@ -67,7 +72,7 @@ public class PieChartView extends ChartView {
             if (mShowValues) {
                 double cos = Math.cos(Math.toRadians(angle + part/2)) * r;
                 double sin = Math.sin(Math.toRadians(angle + part/2)) * r;
-                canvas.drawText(entry.getStringValue(mDataSet.getMax()),
+                canvas.drawText(entry.getStringValue(),
                         arcRect.centerX() + (float)cos,
                         arcRect.centerY() + (float)sin + mValuePaint.getTextSize()/2,
                         mValuePaint);

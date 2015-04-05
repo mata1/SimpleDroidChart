@@ -1,14 +1,17 @@
-package com.github.mata1.simpledroidchart;
+package com.github.mata1.simpledroidchart.charts;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.github.mata1.simpledroidchart.R;
 import com.github.mata1.simpledroidchart.data.DataSet;
+import com.github.mata1.simpledroidchart.legend.Legend;
 import com.github.mata1.simpledroidchart.palettes.ColorPalette;
 import com.github.mata1.simpledroidchart.palettes.PaletteType;
 
@@ -23,10 +26,7 @@ public abstract class ChartView extends View {
 
     protected ColorPalette mColorPalette;
 
-    protected boolean mShowHorGrid;
-
     protected boolean mShowValues;
-
 
     public ChartView(Context context, AttributeSet attrs)  {
         super(context, attrs);
@@ -41,7 +41,7 @@ public abstract class ChartView extends View {
     /**
      * Initialize objects
      */
-    private void init() {
+    protected void init() {
         // init paints
         mChartPaint = new Paint();
         mChartPaint.setAntiAlias(true);
@@ -51,7 +51,7 @@ public abstract class ChartView extends View {
         mValuePaint = new Paint();
         mValuePaint.setAntiAlias(true);
         mValuePaint.setTextAlign(Paint.Align.CENTER);
-        mValuePaint.setFakeBoldText(true);
+        mValuePaint.setTypeface(Typeface.DEFAULT_BOLD);
 
         // init data
         mDataSet = new DataSet();
@@ -64,10 +64,10 @@ public abstract class ChartView extends View {
      * Initialize XML attributes
      * @param attrs xml attribute set
      */
-    private void initAttributes(AttributeSet attrs) {
+    protected void initAttributes(AttributeSet attrs) {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ChartView);
         try {
-            mShowHorGrid = a.getBoolean(R.styleable.ChartView_showHorizontalGrid, false);
+
             mChartPaint.setStrokeWidth(a.getFloat(R.styleable.ChartView_strokeWidth, 2));
             mChartPaint.setColor(a.getColor(R.styleable.ChartView_chartColor, Color.BLACK));
             mGridPaint.setStrokeWidth(a.getFloat(R.styleable.ChartView_gridStrokeWidth, 1));
@@ -122,15 +122,6 @@ public abstract class ChartView extends View {
     }
 
     /**
-     * Show horizontal grid lines
-     * @param showHorGrid whether to show horizontal grid
-     */
-    public void setShowHorizontalGrid(boolean showHorGrid) {
-        mShowHorGrid = showHorGrid;
-        invalidate();
-    }
-
-    /**
      * Show data values
      * @param showValues whether to show data values
      */
@@ -146,6 +137,10 @@ public abstract class ChartView extends View {
     public void setColorPalette(ColorPalette colorPalette) {
         mColorPalette = colorPalette;
         invalidate();
+    }
+
+    public Legend getLegend() {
+        return new Legend(mDataSet, mColorPalette);
     }
 
     protected abstract void onDraw(Canvas canvas);

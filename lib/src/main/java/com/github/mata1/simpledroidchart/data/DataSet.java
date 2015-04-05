@@ -9,19 +9,26 @@ import java.util.List;
  */
 public class DataSet extends ArrayList<DataEntry> {
 
+    private float mMin, mMax;
+    private boolean mMinSet, mMaxSet;
+
     /**
-     * Get maximum value from data set
+     * Get maximum value from data set TODO check if empty
      * @return maximum Y value
      */
     public float getMax() {
+        if (mMaxSet || isEmpty())
+            return mMax;
         return Collections.max(this).getyValue();
     }
 
     /**
-     * Get minimum value from data set
+     * Get minimum value from data set TODO check if empty
      * @return minimum Y value
      */
     public float getMin() {
+        if (mMinSet || isEmpty())
+            return mMin;
         return Collections.min(this).getyValue();
     }
 
@@ -45,15 +52,37 @@ public class DataSet extends ArrayList<DataEntry> {
     public List<Float> getMajorPoints() {
         List<Float> points = new ArrayList<>();
 
-        float diff = getMax() - getMin();
-        float div = 10000000; // TODO optimize
+        float diff = Math.abs(getMax() - getMin());
+        if (diff == 0)
+            diff = getMax();
 
-        while (div > diff)
-            div /= 10;
+        int log = (int)Math.ceil(Math.log10(diff));
+        float div = (float)Math.pow(10, log - 1);
 
-        for (float i = 0/*div*/; i < div * 10; i += div/2)
+        float min = (float)Math.ceil(getMin()/div - 1) * div;
+        float max = (float)Math.floor(getMax()/div + 1) * div;
+
+        for (float i = Math.min(0, min); i <= max; i += div/2)
             points.add(i);
 
         return points;
+    }
+
+    public void setMin(float min) {
+        mMin = min;
+        mMinSet = true;
+    }
+
+    public void resetMin() {
+        mMinSet = false;
+    }
+
+    public void setMax(float max) {
+        mMax = max;
+        mMaxSet = true;
+    }
+
+    public void resetMax() {
+        mMaxSet = false;
     }
 }
