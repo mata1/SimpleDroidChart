@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.github.mata1.simpledroidchart.R;
 import com.github.mata1.simpledroidchart.data.DataSet;
+import com.github.mata1.simpledroidchart.legend.Legend;
 import com.github.mata1.simpledroidchart.palettes.ColorPalette;
 import com.github.mata1.simpledroidchart.palettes.PaletteType;
 
@@ -136,6 +137,10 @@ public abstract class ChartView extends View {
     public void setColorPalette(ColorPalette colorPalette) {
         mColorPalette = colorPalette;
         invalidate();
+    }
+
+    public Legend getLegend() {
+        return new Legend(mDataSet, mColorPalette);
     }
 
     protected abstract void onDraw(Canvas canvas);
