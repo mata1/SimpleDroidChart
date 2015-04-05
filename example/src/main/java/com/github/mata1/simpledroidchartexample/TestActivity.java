@@ -78,7 +78,7 @@ public class TestActivity extends Activity {
         line.setData(data);
 
         PieChartView pie = (PieChartView)findViewById(R.id.pie);
-        pie.setColorPalette(ColorPalette.getRandomPalette(0.5f, 0.95f));
+        //pie.setColorPalette(ColorPalette.getRandomPalette(0.5f, 0.95f));
         pie.setData(data);
 
         BarChartView bar = (BarChartView)findViewById(R.id.bar);

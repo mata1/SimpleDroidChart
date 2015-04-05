@@ -9,7 +9,7 @@
 
     <com.github.mata1.simpledroidchart.charts.BarChartView
         custom:showHorizontalGrid="true"
-        custom:showValues="true"
+        custom:showValues="false"
         custom:colorPalette="oceanFive"
         custom:gapWidth="4"
 
@@ -40,7 +40,7 @@
         custom:gridColor="#33ffaa00"
         custom:gridStrokeWidth="2"
         custom:showValues="true"
-        custom:colorPalette="pastel"
+        custom:colorPalette="oceanFive"
 
         android:layout_weight="1"
         android:id="@+id/line"

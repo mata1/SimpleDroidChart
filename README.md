@@ -3,12 +3,14 @@
 
 Currently it is in pre-release and supports **line**, **bar** and **pie** charts.
 
-Current version **v0.2.2** supports:
+Current version **v0.3.0** supports:
 * line, bar and pie charts
 * XML attributes
 * horizontal and vertical grids
 * different predefined color palettes and random palette generation
 * customizing paints (grid, chart, text)
+* legend
+* displaying values
 
 **v0.1.0:**
 
@@ -28,7 +30,7 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.mata1:SimpleDroidChart:v0.2.2'
+  compile 'com.github.mata1:SimpleDroidChart:v0.3.0'
 }
 ```
 
