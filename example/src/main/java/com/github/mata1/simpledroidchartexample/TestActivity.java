@@ -86,5 +86,23 @@ public class TestActivity extends Activity {
 
         LegendView legendView = (LegendView)findViewById(R.id.legend);
         legendView.setLegend(bar.getLegend());
+
+        // take view snapshot
+        /*final BarChartView b = bar;
+        bar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                b.setDrawingCacheEnabled(true);
+                b.buildDrawingCache(true);
+                Bitmap bi = b.getDrawingCache();
+                String sd = Environment.getExternalStorageDirectory() + File.separator + "BAR.png";
+                try {
+                    bi.compress(Bitmap.CompressFormat.PNG, 100, new FileOutputStream(sd));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });*/
+
     }
 }
